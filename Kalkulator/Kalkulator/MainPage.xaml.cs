@@ -36,5 +36,22 @@ namespace Kalkulator
             }
             Output_Label.Text = currentEntry;
         }
+
+        private void OnSelectOperator(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            operation = button.Text;
+            operationSelected = true;
+        }
+
+        private void OnClear(object sender, EventArgs e)
+        {
+            currentEntry = leftOperand = rightOperand = "";
+            operation = "";
+            operationSelected = false;
+            Output_Label.Text = "0";
+        }
+
+
     }
 }
