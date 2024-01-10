@@ -52,6 +52,44 @@ namespace Kalkulator
             Output_Label.Text = "0";
         }
 
+        private void OnCalculate(object sender, EventArgs e)
+        {
+            double.TryParse(leftOperand, out double left);
+            double.TryParse (rightOperand, out double right);
+            double result = 0;
+
+            switch (operation)
+            {
+                case "+":
+                    result = left + right; break;
+                case "-":
+                    result = left - right; break;
+                case "x":
+                    result = left * right; break;
+                case "/":
+                    if(right!= 0 && left!=0)
+                    {
+                        result = left / right;
+                    }
+                    else
+                    {
+                        Output_Label.Text = "Nie dziel przez 0!";
+                    }
+                    break;
+                case "x^2":
+                    result = Math.Pow(left, right); break;
+                case "SQRT":
+                    if(left >=0)
+                    {
+                        result = Math.Sqrt(left);
+                    }
+                    break;
+            }
+            Output_Label.Text = result.ToString();
+            leftOperand = result.ToString();
+            rightOperand = "";
+            operationSelected = false;
+        }
 
     }
 }
