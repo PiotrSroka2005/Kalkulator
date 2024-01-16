@@ -82,6 +82,7 @@ namespace Kalkulator
             {
                 currentEntry += leftOperand;
             }
+            OutputEquation_Label.Text += currentEntry;
             Output_Label.Text = currentEntry;
         }
 
