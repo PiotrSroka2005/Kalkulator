@@ -41,7 +41,7 @@ namespace Kalkulator
         {
             var button = (Button)sender;
             operation = button.Text;
-            operationSelected = true;
+            operationSelected = true;           
         }
 
         private void OnClear(object sender, EventArgs e)
@@ -50,6 +50,39 @@ namespace Kalkulator
             operation = "";
             operationSelected = false;
             Output_Label.Text = "0";
+        }
+
+        private void OnSelectDecimal(object sender, EventArgs e)
+        {
+            if(operationSelected && !rightOperand.Contains("."))
+            {
+                if(string.IsNullOrEmpty(rightOperand))
+                    rightOperand += "0";
+                else
+                    rightOperand += ".";
+            }
+            else if(!operationSelected && !leftOperand.Contains("."))
+            {
+                if(string.IsNullOrEmpty (leftOperand))
+                    leftOperand += "0";
+                else
+                    leftOperand += ".";
+            }
+
+            UpdateDisplay();
+        }
+
+        public void UpdateDisplay()
+        {
+            if(operationSelected)
+            {
+                currentEntry = rightOperand;
+            }
+            else
+            {
+                currentEntry += leftOperand;
+            }
+            Output_Label.Text = currentEntry;
         }
 
         private void OnCalculate(object sender, EventArgs e)
@@ -65,16 +98,10 @@ namespace Kalkulator
                 case "-":
                     result = left - right; break;
                 case "x":
-                    result = left * right; break;
-                case "/":
-                    if(right!= 0 && left!=0)
-                    {
-                        result = left / right;
-                    }
-                    else
-                    {
-                        Output_Label.Text = "Nie dziel przez 0!";
-                    }
+                    result = left * right;                    
+                    break;
+                case "/":                    
+                        result = left / right;                                                       
                     break;
                 case "x^2":
                     result = Math.Pow(left, right); break;
@@ -85,10 +112,20 @@ namespace Kalkulator
                     }
                     break;
             }
-            Output_Label.Text = result.ToString();
-            leftOperand = result.ToString();
-            rightOperand = "";
-            operationSelected = false;
+            if ((right == 0 && left==0) || left == 0 || right==0)
+            {
+                Output_Label.Text = "Nie dziel przez 0!";
+                leftOperand = "";
+                rightOperand = "";
+                operationSelected = false;                
+            }                
+            else
+            {
+                Output_Label.Text = result.ToString();
+                leftOperand = result.ToString();
+                rightOperand = "";
+                operationSelected = false;
+            }
         }
 
     }
